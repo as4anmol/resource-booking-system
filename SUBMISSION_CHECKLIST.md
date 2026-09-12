@@ -12,7 +12,7 @@
 
 - [x] **Hardcoded Database Password Removed**
   - File: `src/main/resources/application.properties`
-  - Change: `spring.datasource.password=${DB_PASSWORD:root1234}`
+  - Change: `spring.datasource.password=${DB_PASSWORD}`
   - Deployment: Set `DB_PASSWORD` environment variable
 
 - [x] **Hardcoded JWT Secret Removed**

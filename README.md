@@ -73,8 +73,8 @@ Option B: Update `application.properties`:
 
 ```properties
 spring.datasource.username=${DB_USERNAME:root}
-spring.datasource.password=${DB_PASSWORD:root1234}
-jwt.secret=${JWT_SECRET:change_me_in_production}
+spring.datasource.password=${DB_PASSWORD}
+jwt.secret=${JWT_SECRET}
 jwt.expiration=${JWT_EXPIRATION:86400000}
 ```
 

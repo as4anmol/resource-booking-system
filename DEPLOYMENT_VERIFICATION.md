@@ -227,8 +227,8 @@ Create `.env` file in project root:
 
 ```
 DB_USERNAME=root
-DB_PASSWORD=root1234
-JWT_SECRET=8f42a73054b1749f7db4c3f7f5a9e9b8d3c1e6a4f8b2d5c7e0a3f6b9d2c5e8a1
+DB_PASSWORD=<set-in-your-environment>
+JWT_SECRET=<set-in-your-environment>
 JWT_EXPIRATION=86400000
 ```
 
@@ -264,8 +264,8 @@ mvn test
 
 ```bash
 # Set env vars first
-export DB_PASSWORD=root1234
-export JWT_SECRET=8f42a73054b1749f7db4c3f7f5a9e9b8d3c1e6a4f8b2d5c7e0a3f6b9d2c5e8a1
+export DB_PASSWORD=<set-in-your-environment>
+export JWT_SECRET=<set-in-your-environment>
 
 # Run application
 mvn spring-boot:run
@@ -340,8 +340,8 @@ curl http://localhost:8080/reservations -X POST \
 ```
 ✅ application.properties
    - Added: spring.datasource.username=${DB_USERNAME:root}
-   - Changed: spring.datasource.password=${DB_PASSWORD:root1234}
-   - Changed: jwt.secret=${JWT_SECRET:...}
+  - Changed: spring.datasource.password=${DB_PASSWORD}
+  - Changed: jwt.secret=${JWT_SECRET}
    - Added: jwt.expiration=${JWT_EXPIRATION:86400000}
    - Changed: spring.jpa.show-sql=false
    - Added: spring.jpa.open-in-view=false

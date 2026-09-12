@@ -36,11 +36,11 @@
 ### 1. `application.properties` (CRITICAL SECURITY FIX)
 
 ```diff
-- spring.datasource.password=root1234
-+ spring.datasource.password=${DB_PASSWORD:root1234}
+- spring.datasource.password=[redacted]
++ spring.datasource.password=${DB_PASSWORD}
 
-- jwt.secret=8f42a73054b1749f7db4c3f7f5a9e9b8d3c1e6a4f8b2d5c7e0a3f6b9d2c5e8a1
-+ jwt.secret=${JWT_SECRET:8f42a73054b1749f7db4c3f7f5a9e9b8d3c1e6a4f8b2d5c7e0a3f6b9d2c5e8a1}
+- jwt.secret=[redacted]
++ jwt.secret=${JWT_SECRET}
 
 - spring.jpa.show-sql=true
 + spring.jpa.show-sql=false

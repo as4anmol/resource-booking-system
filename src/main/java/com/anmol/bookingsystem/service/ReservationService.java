@@ -10,16 +10,22 @@ import com.anmol.bookingsystem.repository.ResourceRepository;
 import com.anmol.bookingsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
+
+    private static final Set<String> ALLOWED_SORT_FIELDS = Set.of(
+            "startTime", "endTime", "price", "status");
 
     private final ReservationRepository reservationRepository;
     private final ResourceRepository resourceRepository;
@@ -69,6 +75,12 @@ public class ReservationService {
             BigDecimal maxPrice,
             Pageable pageable) {
 
+        if (minPrice != null && maxPrice != null && minPrice.compareTo(maxPrice) > 0) {
+            throw new IllegalArgumentException("Minimum price cannot be greater than maximum price");
+        }
+
+        pageable = validatedPageable(pageable);
+
         User currentUser = userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
@@ -95,6 +107,20 @@ public class ReservationService {
 
         Page<Reservation> reservations = reservationRepository.findAll(spec, pageable);
         return reservations.map(this::toDTO);
+    }
+
+    private Pageable validatedPageable(Pageable pageable) {
+        Sort sort = pageable.getSort();
+        if (sort.isUnsorted()) {
+            sort = Sort.by(Sort.Direction.ASC, "startTime");
+        } else {
+            for (Sort.Order order : sort) {
+                if (!ALLOWED_SORT_FIELDS.contains(order.getProperty())) {
+                    throw new IllegalArgumentException("Unsupported sort field: " + order.getProperty());
+                }
+            }
+        }
+        return PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
     }
 
     public ReservationResponseDTO getReservationById(Long id, Authentication authentication) {

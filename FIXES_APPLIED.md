@@ -16,16 +16,16 @@
 **Before**:
 
 ```properties
-spring.datasource.password=root1234
-jwt.secret=8f42a73054b1749f7db4c3f7f5a9e9b8d3c1e6a4f8b2d5c7e0a3f6b9d2c5e8a1
+spring.datasource.password=[redacted]
+jwt.secret=[redacted]
 ```
 
 **After**:
 
 ```properties
 spring.datasource.username=${DB_USERNAME:root}
-spring.datasource.password=${DB_PASSWORD:root1234}
-jwt.secret=${JWT_SECRET:8f42a73054b1749f7db4c3f7f5a9e9b8d3c1e6a4f8b2d5c7e0a3f6b9d2c5e8a1}
+spring.datasource.password=${DB_PASSWORD}
+jwt.secret=${JWT_SECRET}
 jwt.expiration=${JWT_EXPIRATION:86400000}
 ```
 
