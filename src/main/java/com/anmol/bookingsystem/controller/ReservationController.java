@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/reservations")
@@ -26,7 +27,8 @@ public class ReservationController {
     public ResponseEntity<ReservationResponseDTO> createReservation(
             @Valid @RequestBody ReservationRequestDTO dto,
             Authentication authentication) {
-        return ResponseEntity.ok(reservationService.createReservation(dto, authentication));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(reservationService.createReservation(dto, authentication));
     }
 
     @GetMapping

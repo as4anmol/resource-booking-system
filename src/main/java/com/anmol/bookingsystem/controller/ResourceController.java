@@ -4,6 +4,7 @@ import com.anmol.bookingsystem.dto.ResourceDTO;
 import com.anmol.bookingsystem.service.ResourceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,8 @@ public class ResourceController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ResourceDTO> createResource(@Valid @RequestBody ResourceDTO dto) {
-        return ResponseEntity.ok(resourceService.createResource(dto));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(resourceService.createResource(dto));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

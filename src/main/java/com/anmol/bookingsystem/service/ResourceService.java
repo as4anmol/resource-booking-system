@@ -2,6 +2,7 @@ package com.anmol.bookingsystem.service;
 
 import com.anmol.bookingsystem.dto.ResourceDTO;
 import com.anmol.bookingsystem.entity.Resource;
+import com.anmol.bookingsystem.exception.ResourceNotFoundException;
 import com.anmol.bookingsystem.repository.ResourceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ResourceService {
 
     public ResourceDTO getResourceById(Long id) {
         Resource resource = resourceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
         return toDTO(resource);
     }
 
@@ -41,7 +42,7 @@ public class ResourceService {
 
     public ResourceDTO updateResource(Long id, ResourceDTO dto) {
         Resource resource = resourceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 
         resource.setName(dto.getName());
         resource.setType(dto.getType());
@@ -54,7 +55,7 @@ public class ResourceService {
 
     public void deleteResource(Long id) {
         if (!resourceRepository.existsById(id)) {
-            throw new RuntimeException("Resource not found with id: " + id);
+            throw new ResourceNotFoundException("Resource not found with id: " + id);
         }
         resourceRepository.deleteById(id);
     }
